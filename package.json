@@ -1,0 +1,19 @@
+{
+  "name": "location-switcher-addon",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "eslint . ",
+    "build:js": "uglifyjs src/js -o dist/app.min.js --compress --mangle",
+    "build:css": "cleancss -o dist/styles.min.css src/css/*.css",
+    "build": "npm run build:js && npm run build:css",
+    "web-ext": "web-ext run --source-dir=dist"
+  },
+  "devDependencies": {
+    "uglify-js": "^3.18.0",
+    "clean-css-cli": "^5.6.3",
+    "eslint": "^8.50.0",
+    "web-ext": "^8.4.0"
+  }
+}

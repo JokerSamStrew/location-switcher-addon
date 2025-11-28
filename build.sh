@@ -39,7 +39,8 @@ function buildFirefox() {
 	version=`cat manifest.json | sed -n "s/.*\"version\": \"\(.*\)\".*/\1/p"`
 	echo "Target: ${buildName}\nVersion: ${version}\n"
 
-	/usr/bin/env web-ext lint
+	# /usr/bin/env web-ext lint
+	npx web-ext lint
 
 	# echo "Build archive for code review..."
 	cp ../README.md ./;
@@ -48,14 +49,16 @@ function buildFirefox() {
 
 	for file in `find . -type f -name "*.js"`; do
 		echo "Minify: ${file}"
-		/usr/bin/env uglifyjs "${file}" -o "${file}.min" --compress
+        # /usr/bin/env uglifyjs "${file}" -o "${file}.min" --compress
+		npx uglifyjs "${file}" -o "${file}.min" --compress
 		rm "${file}"
 		mv "${file}.min" "${file}"
 	done
 
 	for file in `find . -type f -name "*.css"`; do
 		echo "Minify: ${file}"
-		/usr/bin/env cleancss --inline none -o "${file}.min" "${file}"
+		# /usr/bin/env cleancss --inline none -o "${file}.min" "${file}"
+		npx cleancss --inline none -o "${file}.min" "${file}"
 		rm "${file}"
 		mv "${file}.min" "${file}"
 	done
@@ -68,7 +71,8 @@ function buildFirefox() {
 
 	cd ..
 
-	/usr/bin/env web-ext build -s $tmp -a dist --overwrite-dest --ignore-files "**/*.md"
+	# /usr/bin/env web-ext build -s $tmp -a dist --overwrite-dest --ignore-files "**/*.md"
+	npx web-ext build -s $tmp -a dist --overwrite-dest --ignore-files "**/*.md"
 
 	rm -fr $tmp
 }
@@ -80,7 +84,8 @@ function buildChrome() {
 
 	rm -fr $tmp
 	cp -aR chrome $tmp
-	/usr/bin/env web-ext build -s $tmp -a dist
+	# /usr/bin/env web-ext build -s $tmp -a dist
+	npx web-ext build -s $tmp -a dist
 	rm -fr $tmp
 }
 
@@ -132,7 +137,8 @@ function test() {
 	# cd firefox; /usr/bin/env web-ext lint; cd ..
 	# cd firefox-advanced; /usr/bin/env web-ext lint; cd ..
 	for path in `find . -type f -name "*.js"`; do
-		/usr/bin/env eslint $path
+		# /usr/bin/env eslint $path
+		npm run lint $path
 	done
 }
 
