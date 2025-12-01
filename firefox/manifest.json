@@ -6,7 +6,7 @@
   "homepage_url": "https://github.com/ethanliu/location-switcher-addon",
 
   "content_security_policy": {
-    "extension_pages": "default-src 'self'"
+    "extension_pages": "default-src 'self';img-src 'self' data:; script-src 'self'"
   },
 
   "icons": {
@@ -33,6 +33,14 @@
   "permissions": ["tabs", "storage"],
 
   "page_action": {
+    "default_icon": {
+      "48": "icons/default.svg",
+      "96": "icons/default.svg"
+    },
+    "default_popup": "/popup/popup.html"
+  },
+
+  "action": {
     "default_icon": "icons/default.svg",
     "default_popup": "/popup/popup.html"
   },
@@ -50,5 +58,12 @@
     "_execute_page_action": {
       "description": "Trigger the default action"
     }
-  }
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/default.svg"],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }
